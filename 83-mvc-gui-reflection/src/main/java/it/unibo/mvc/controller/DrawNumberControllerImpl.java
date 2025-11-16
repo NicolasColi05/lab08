@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * This class implements the game controller. It orchestrates the game, exposes methods to its observers
  * (the boundaries), and sends results to them.
@@ -47,6 +49,7 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
         this.model.reset();
     }
 
+    @SuppressFBWarnings
     @Override
     public void quit() {
         /*
