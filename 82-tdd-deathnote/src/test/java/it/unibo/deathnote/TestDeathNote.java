@@ -18,11 +18,11 @@ class TestDeathNote {
     private static final String PERSON = "Nicolas Colinucci";
     private static final String PERSON2 = "Mario Rossi";
 
-    private DeathNote diario;
+    private DeathNote note;
 
     @BeforeEach
     void setUp() {
-        this.diario = new DeathNoteImpl();
+        this.note = new DeathNoteImpl();
     }
 
     @Test
@@ -30,7 +30,7 @@ class TestDeathNote {
         assertThrows(IllegalArgumentException.class, new Executable() {
             @Override
             public void execute() throws Throwable {
-                diario.getRule(0);
+                note.getRule(0);
             }
         });
     }
@@ -38,17 +38,17 @@ class TestDeathNote {
     @Test
     void testOfGetRule2() {
         for (int i = 1; i < NUMBER_OF_RULE; i++) {
-            assertTrue(diario.getRule(i) != null, "the rule " + i + "is null");
+            assertTrue(note.getRule(i) != null, "the rule " + i + "is null");
         }
     }
 
     @Test
     void testWriteName() {
-        if (!diario.isNameWritten(PERSON)) {
-            diario.writeName(PERSON);
-            assertTrue(diario.isNameWritten(PERSON));
-            assertFalse(diario.isNameWritten("Nicolas Bianchi"));
-            assertFalse(diario.isNameWritten(""));
+        if (!note.isNameWritten(PERSON)) {
+            note.writeName(PERSON);
+            assertTrue(note.isNameWritten(PERSON));
+            assertFalse(note.isNameWritten("Nicolas Bianchi"));
+            assertFalse(note.isNameWritten(""));
         }
     }
 
@@ -57,16 +57,16 @@ class TestDeathNote {
         assertThrows(IllegalStateException.class, new Executable() {
             @Override
             public void execute() throws Throwable {
-                diario.writeDeathCause("heart attack");
+                note.writeDeathCause("heart attack");
             }
         });
-        diario.writeName(PERSON);
-        assertEquals(diario.getDeathCause(PERSON), "heart attack");
-        diario.writeName(PERSON2);
-        assertTrue(diario.writeDeathCause("karting accident"));
+        note.writeName(PERSON);
+        assertEquals(note.getDeathCause(PERSON), "heart attack");
+        note.writeName(PERSON2);
+        assertTrue(note.writeDeathCause("karting accident"));
         Thread.sleep(100);
-        assertFalse(diario.writeDeathCause("hit by a track"));
-        assertEquals(diario.getDeathCause(PERSON2), "karting accident");
+        assertFalse(note.writeDeathCause("hit by a track"));
+        assertEquals(note.getDeathCause(PERSON2), "karting accident");
     }
 
     @Test
@@ -74,16 +74,16 @@ class TestDeathNote {
         assertThrows(IllegalStateException.class, new Executable() {
             @Override
             public void execute() throws Throwable {
-                diario.writeDetails("ran");
+                note.writeDetails("ran");
             }
         });
-        diario.writeName(PERSON);
-        assertEquals("", diario.getDeathDetails(PERSON));
-        assertTrue(diario.writeDetails("ran for too long"));
-        assertEquals(diario.getDeathDetails(PERSON), "ran for too long");
-        diario.writeName(PERSON2);
+        note.writeName(PERSON);
+        assertEquals("", note.getDeathDetails(PERSON));
+        assertTrue(note.writeDetails("ran for too long"));
+        assertEquals(note.getDeathDetails(PERSON), "ran for too long");
+        note.writeName(PERSON2);
         Thread.sleep(TIME);
-        diario.writeDetails("saw a ghost");
-        assertEquals(diario.getDeathDetails(PERSON2), "");
+        note.writeDetails("saw a ghost");
+        assertEquals(note.getDeathDetails(PERSON2), "");
     }
 }
